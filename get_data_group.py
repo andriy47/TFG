@@ -23,7 +23,7 @@ id_group = '1038566552861343'
 graph = facebook.GraphAPI(access_token)
 #groups = graph.get_object(id='1430450483863801', fields='feed{comments{message}}')
 group = graph.get_object(user)
-groups = graph.get_connections(id_gr, 'groups')
+messages = graph.get_connections(id_gr, 'messages')
 
 #Add user to mongo collection
 print(profile)
