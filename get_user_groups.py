@@ -20,7 +20,7 @@ db = client['analistics']
 access_token = '407156876319284|h5wEvmcAky9NjDDXXp4rnjHkFbg'
 # Look at Bill Gates's profile for this example by using his Facebook id.
 #user = '1469643709723274'
-user = '100009862202576'
+user = '1469643709723274'
 graph = facebook.GraphAPI(access_token)
 #groups = graph.get_object(id='1430450483863801', fields='feed{comments{message}}')
 profile = graph.get_object(user)
