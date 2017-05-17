@@ -1,24 +1,113 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h3>Facebook</h3>
-  {% if facebook_login %}
-    <p>Connected as <a href="https://facebook.com/{{ facebook_login.extra_data.id }}/" target="_blank">{{ facebook_login.extra_data.id }}</a></p>
-     {# if can_disconnect #}
-     {% comment %}
-       <form method="post" action="{% url 'social:disconnect' 'facebook' %}">
-        {# % csrf_token % #}
-        <button type="submit">Disconnect from Facebook</button>
-       </form>
 
-      {% else %}
-       <button type="button" >Disconnect from Facebook</button>
-       <p style="color: red">You must <a href="{% url 'password' %}">define a password</a> for your account before disconnecting from Facebook.</p>
+<div id="wrapper">
 
-     {% endif %}
-     {% endcomment %}
-  {% else %}
-    <a href="{% url 'social:begin' 'facebook' %}">Connect to Facebook</a>
-  {% endif %}
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'settings' %}">AnalisticsGrups</a>
+        </div>
+        <!-- Top Menu Items -->
+        <ul class="nav navbar-right top-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{ user.username }} <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <!-- <li>
+                        <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                    </li> -->
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-envelope"></i> Grupos</a>
+                    </li>
+                    <!-- <li>
+                        <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+                    </li> -->
+                    <li class="divider"></li>
+                    <li>
+                        <a href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav side-nav">
+                <li class="active">
+                    <a href="{% url 'settings' %}"><i class="fa fa-fw fa-dashboard"></i> Grupos</a>
+                </li>
+                <li>
+                      <a href="{% url 'logout' %}">Log out</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </nav>
+
+    <div id="page-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                        <small>Elige el grupo a analizar</small>
+                    </h1>
+                    <!-- <ol class="breadcrumb">
+                        <li class="active">
+                          {% if user.is_authenticated %}
+                            You are signed in as <strong>{{ user.username }}</strong>
+                          {% endif %}
+                        </li>
+                    </ol> -->
+                </div>
+            </div>
+            <!-- /.row -->
+
+            <div class="row">
+                {% if facebook_login %}
+                  {% for key, value in groups_avaliables.items %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                <div class="row">
+                                  <div class="col-xs-3">
+                                      <i class="fa fa-comments fa-5x"></i>
+                                  </div>
+                                  <div class="col-xs-9 text-right">
+                                    <div>{{ value }}</div>
+                                  </div>
+                                </div>
+                            </div>
+                            <a href="{% url 'datag' %}" >
+                                <div class="panel-footer">
+                                    <span class="pull-left">Ver Detalles</span>
+                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                  {% endfor %}
+                {% endif %}
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+</div>
+<!-- /#wrapper -->
 
 {% endblock %}

@@ -9,11 +9,12 @@ https://docs.djangoproject.com/en/1.10/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.10/ref/settings/
 """
-
+import os
+import sys
+from django.core.handlers.wsgi import WSGIHandler
 from decouple import config, Csv
 import dj_database_url
 
-import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -29,7 +30,7 @@ SECRET_KEY = '(4ijy8u0ekxzug*ic8ptkf*#4$b#9*-^jg%ya5#59vw18(%@gz'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['172.28.128.3', 'localhost']
+ALLOWED_HOSTS = ['localhost']
 
 
 # Application definition
@@ -41,9 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'social_django',
-
     'mysite.core',
 ]
 
@@ -93,9 +92,11 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #}
 
 DATABASES = {
-     'default': { 
-        'ENGINE': 'django.db.backends.sqlite3', 
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'), 
+     'default': {
+        #  'ENGINE' : 'django_mongodb_engine',
+        #   'NAME' : 'analistics'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

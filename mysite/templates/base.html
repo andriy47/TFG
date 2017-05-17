@@ -1,21 +1,40 @@
-{% load static %}<!DOCTYPE html>
+{% load static %}
+<!-- <!DOCTYPE html> -->
 <html>
 <head>
-  <title>Simple Social Auth</title>
+  <title>AnalisticGroup</title>
   <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+  <link rel="stylesheet" href="{% static 'css/start.css' %}">
 </head>
-<body align='center'>
+<body text-align='center'>
   <header>
-    <h1>Simple Social Auth</h1>
-    {% if user.is_authenticated %}
-      You are signed in as <strong>{{ user.username }}</strong> /
-      {% comment %}
-      <a href="{% url 'home' %}">home</a> / 
-      <a href="{% url 'settings' %}">settings</a> /
-      <a href="{% url 'password' %}">change password</a> /
-      {% endcomment %}
-      <a href="{% url 'logout' %}">Logout</a>
-    {% endif %}
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SB Admin - Bootstrap Admin Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="{% static 'css/sb-admin.css' %}" rel="stylesheet">
+    <!-- Morris Charts CSS -->
+    <link href="{% static 'css/plugins/morris.css' %}" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery.js' %}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- Morris Charts JavaScript -->
+      <script src="{% static 'js/plugins/morris/raphael.min.js' %}"></script>
+      <script src="{% static 'js/plugins/morris/morris.min.js' %}"></script>
+      <script src="{% static 'js/plugins/morris/morris-data.js' %}"></script>
   </header>
   <main>
     {% for message in messages %}
@@ -27,7 +46,7 @@
     {% endblock %}
   </main>
   <footer>
-	
+
   </footer>
 </body>
 </html>
