@@ -36,7 +36,7 @@ def home(request):
 
 @login_required
 def datag(request):
-    access_token = 'EAACEdEose0cBAEZBzNXenTQyVHC4ouaqmMZCIAqFvCM2leloGQLedWIrdoRGx7nw9HnqvgZAcCAojRcPZCiADnQilxJMtRww5HB1prlYFUe2IN55oq8In82dZAaQfppVmS1UwZAqtZBLDe4h9P8c7Yo0B8ZC4LpCQu5JfdbmTfJjhp28MG9WGZCUjMFyEURmEZCfMZD'
+    access_token = 'EAACEdEose0cBAMfrwZBWkkoxdh5ledFkXQkCr0PkJK4zreXUspVvRpMAWigkckR4ZCFZB8kKRPzbkTDpq9AdUnOqGZCkMssFhSfiyj4GBbT2zbU4JDiUh6pGI3I1GshcWleeciaazXOHROeoqReWW45lRkFnEV3i4fBFNS7uB6fRYRykcNEZCcWPOw2F7Vp0ZD'
     user = '1469643709723274'
     graph = facebook.GraphAPI(access_token)
     id_group = '1038566552861343'
@@ -76,7 +76,7 @@ def settings(request):
     #Get tokens and id necesry from facebook user
 
     #access_token = facebook_login.extra_data['access_token']
-    access_token = 'EAACEdEose0cBAEZBzNXenTQyVHC4ouaqmMZCIAqFvCM2leloGQLedWIrdoRGx7nw9HnqvgZAcCAojRcPZCiADnQilxJMtRww5HB1prlYFUe2IN55oq8In82dZAaQfppVmS1UwZAqtZBLDe4h9P8c7Yo0B8ZC4LpCQu5JfdbmTfJjhp28MG9WGZCUjMFyEURmEZCfMZD'
+    access_token = 'EAACEdEose0cBAMfrwZBWkkoxdh5ledFkXQkCr0PkJK4zreXUspVvRpMAWigkckR4ZCFZB8kKRPzbkTDpq9AdUnOqGZCkMssFhSfiyj4GBbT2zbU4JDiUh6pGI3I1GshcWleeciaazXOHROeoqReWW45lRkFnEV3i4fBFNS7uB6fRYRykcNEZCcWPOw2F7Vp0ZD'
     graph = facebook.GraphAPI(access_token)
     print(facebook_login.extra_data)
     #user_id=facebook_login.extra_data['id']

@@ -1,48 +1,96 @@
 """
 A simple example script to get all posts on a user's timeline.
-Originally created by Mitchell Stewart.
-<https://gist.github.com/mylsb/10294040>
 """
+#Imports for xlsx File.
+import openpyxl
+import operator
 
+#Imports for GET data from Facebook and parse json.
 import facebook
 import requests
 import json
 
+#Requirements to connect at MongoClient.
+from collections import OrderedDict
 from pymongo import MongoClient
 
 client = MongoClient('localhost', 27017)
 db = client['analistics']
 
-
-# You'll need an access token here to do anything.  You can get a temporary one
-# here: https://developers.facebook.com/tools/explorer/
-
-#access_token = 'EAAFyTpj7GjQBAGIq4z85IsiAKJKB9XWrV5OFJq8ZAwo8sEHlpP8ZBzhqfA2ZAmExtGnFsiMhB5pLa3bMAxeiYquvBDVcZB8x5Mk2pL3guoZAdFJha870x6yf2boYTLA8wpGUkDf17F2xEoSqduBRnJK5RhANTByLjzup4udW6OtarOlQY4Je3KxY4MZAXnqdcZD'
-access_token = '407156876319284|h5wEvmcAky9NjDDXXp4rnjHkFbg'
-
-# Look at Bill Gates's profile for this example by using his Facebook id.
-
+#Temporal tokens to use.
+access_token = 'EAACEdEose0cBAAa6s3lZA1O9WZCtXTPGxDDHDiZB5O8ktBv5PpKEfz6AmigOeccZCKBv8GxKPjdgGWvsxDxBXHlMBIZBsMLcScu5EDqi9fAgeCtZAPmjLjb4RJoObc6WFqJ0GdoLuQuwtlKZBfo2TT8xoLYffETsFCIAm1vsQ5D8Q9wdS2hI7wZAJUPh2hjA9XEZD'
 #user = '1469643709723274'
-user = '1469643709723274'
+id_group = '1038566552861343'
+
+mesage = dict()
 graph = facebook.GraphAPI(access_token)
 
-#groups = graph.get_object(id='1430450483863801', fields='feed{comments{message}}')
-profile = graph.get_object(user)
-groups = graph.get_connections(user, 'groups')
+#Start to GET all comments from posts with diferents levels of Facebook groups.
+datass = graph.get_connections(id_group, '?fields=feed{comments{message,from}}')
+datass = datass.get('feed')
+while(True):
+	try:
+		for dat in datass.get('data'):
+			datt = dat.get('comments')
+			if datt:
+				for allcoments in datt.get('data'):
+					id_user = allcoments.get('from').get('id')
+					user_message = allcoments.get('message').split()
+					if id_user in mesage:
+						d = mesage.get(id_user) + user_message
+						mesage[id_user] = list(set(d))
+						#mesage[id_user].append(user_message)
+					else:
+						mesage[id_user] = user_message
+		if datass:
+			datass = requests.get(datass['paging']['next']).json()
+	except KeyError:
+		break
 
-#Add user to mongo collection
-#print(profile)
-result_user = db.users.find_one({'id':profile['id']})
-print(result_user)
-if str(result_user) == 'None':
-	db.users.insert(profile)
+#Start to GET all reply comments from posts of Facebook groups.
+comments = graph.get_connections(id_group, '?fields=feed{comments{comments}}')
+comments = comments.get('feed')
+while(True):
+	try:
+		for val in comments.get('data'):
+			if val.get('comments'):
+				if val.get('comments').get('data')[0].get('comments'):
+					for replys in val.get('comments').get('data')[0].get('comments').get('data'):
+						id_com_usr = replys.get('from').get('id')
+						mess_usr = replys.get('message').split()
+						if id_com_usr in mesage:
+							t = mesage.get(id_com_usr) + mess_usr
+							mesage[id_com_usr] = list(set(t))
+						else:
+							mesage[id_com_usr] = mess_usr
+		if comments:
+			comments = requests.get(comments.get('paging')['next']).json()
+	except TypeError:
+		break
+#FINAL ARRAYHASH WITH ALL COMMENTS AT PERSONS
+#print(json.dumps(mesage))
+print("1st Done!")
 
-#Add user_id wich groups is had
-for value in groups['data']:
-	result = db.groups.find_one({'id':value['id']})
-	if str(result) == 'None':
-		value['user_id'] = user
-		db.groups.insert(value)
-#print("All done.")
+wb = openpyxl.Workbook()
+wb = openpyxl.load_workbook(filename = 'emotions.xlsx', read_only=True)
+
+sheets = wb.sheetnames
+ws = wb[sheets[0]]
+diccionary = dict()
+
+#Read de xlsx file and save in arrayhash the words and her puntuation in the table.
+for row in ws.iter_rows(min_row=2, max_col=11, max_row=14183):
+    diccionary[row[0].value] = []
+    for cell in row:
+        if not cell.value in diccionary:
+            diccionary[row[0].value].append(cell.value)
+
+print('2nd Done!')
+sentimientos = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+for key, valu in mesage.iteritems():
+	for pal in valu:
+		if pal in diccionary:
+			sentimientos = map(operator.add, sentimientos, diccionary.get(pal))
 
 
+print(sentimientos)
