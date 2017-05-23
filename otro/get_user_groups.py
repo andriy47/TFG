@@ -9,6 +9,7 @@ import operator
 import facebook
 import requests
 import json
+import pprint
 
 #Requirements to connect at MongoClient.
 from collections import OrderedDict
@@ -39,7 +40,6 @@ while(True):
 					if id_user in mesage:
 						d = mesage.get(id_user) + user_message
 						mesage[id_user] = list(set(d))
-						#mesage[id_user].append(user_message)
 					else:
 						mesage[id_user] = user_message
 		if datass:
@@ -91,6 +91,5 @@ for key, valu in mesage.iteritems():
 	for pal in valu:
 		if pal in diccionary:
 			sentimientos = map(operator.add, sentimientos, diccionary.get(pal))
-
 
 print(sentimientos)
