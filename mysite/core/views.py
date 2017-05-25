@@ -17,35 +17,16 @@ from mysite.form import InputNumeroForm
 
 client = MongoClient('localhost', 27017)
 db = client['analistics']
-
-
-# def signup(request):
-#     if request.method == 'POST':
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             user = authenticate(
-#                 username=form.cleaned_data.get('username'),
-#                 password=form.cleaned_data.get('password1')
-#             )
-#             login(request, user)
-#             return redirect('home')
-#     else:
-#         form = UserCreationForm()
-#     return render(request, 'registration/signup.html', {'form': form})
-
+access_token = 'EAACEdEose0cBADfPoeDMUK6gQtlT7rPk5f13pHFZBKmYPCQ7sBUE3ZArZCwHhNuF8XICvU8ZCDyJPMMd6TWnO08quw21iUKCZCXfZAYMjMrJwOO1fziUO39g2PGlfWmOrWOcZBZAURd3ys8WTv1lTzw2wZAWmP74NSuMM2WOSow7BY1QgJVeRTNNCHxWsAUTqkUQZD'
 @login_required
 def home(request):
     return render(request, 'core/home.html')
 
 @login_required
 def datag(request):
-    access_token = 'EAACEdEose0cBADHPGy14tAGWZCKwpYGBTvDqGxEZCgcjjgJz3mfmxpv8woRDZCRVqHExoIie9ZCkSbovmbzDrnEjrJ46vZAG1ZAehWwr0daVFZBiwFSaJ8whbP7iKOeGoji8oepuypH3GTivcGwHFS5KERRZAlMU8baoi7XGWwHN4XypxnDBFlmgjH8j5yt3XcgZD'
     if request.method == 'POST':
         if request.POST.get('numero', False):
             id_group = int(request.POST['numero'])
-    #         print(m)
-    # id_group = '1038566552861343'
     graph = facebook.GraphAPI(access_token)
     mesage = dict()
 
@@ -108,25 +89,18 @@ def datag(request):
         for cell in row:
             if not cell.value in diccionary:
                 diccionary[row[0].value].append(cell.value)
-
-    #print('2nd Done!')
     sentimientos = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     for key, valu in mesage.iteritems():
     	for pal in valu:
     		if pal in diccionary:
     			sentimientos = map(operator.add, sentimientos, diccionary.get(pal))
-
     finaldata = dict()
     typeemoji = ['Positivo','Confiado','Alegria','Anticipacion','Sopresa','Tristesa','Disgusto','Miedo','Ira','Negatividad']
     for typ, punt in zip(typeemoji,sentimientos):
         finaldata[typ] = punt
-
-    #print(finaldata)
-
     return render(request, 'core/datag.html', {
         'ladate': finaldata,
     })
-#     return render(request, 'core/gentelella-master/production/adminpanel.html')
 
 @login_required
 def settings(request):
@@ -139,12 +113,7 @@ def settings(request):
 
     #Get tokens and id necesry from facebook user
 
-    #access_token = facebook_login.extra_data['access_token']
-    access_token = 'EAACEdEose0cBADHPGy14tAGWZCKwpYGBTvDqGxEZCgcjjgJz3mfmxpv8woRDZCRVqHExoIie9ZCkSbovmbzDrnEjrJ46vZAG1ZAehWwr0daVFZBiwFSaJ8whbP7iKOeGoji8oepuypH3GTivcGwHFS5KERRZAlMU8baoi7XGWwHN4XypxnDBFlmgjH8j5yt3XcgZD'
     graph = facebook.GraphAPI(access_token)
-    #print(facebook_login.extra_data)
-    #user_id=facebook_login.extra_data['id']
-    # print(user_id)
     user_id = '786814664672852'
     profile = graph.get_object(user_id)
 
@@ -154,18 +123,11 @@ def settings(request):
     #Insert if not exist
     if str(result_user) == 'None':
 	       db.users.insert(profile)
-
-    #print(user_id)
     groups = graph.get_connections(user_id, 'groups')
-    # data_groups = groups['data']
-    # for value in data_groups:
-    #     print(value['name'])
     can_disconnect = (user.social_auth.count() > 1 or user.has_usable_password())
-
 
     groups_avaliables = {}
     #Add user_id wich groups is had
-
     for value in groups['data']:
         result = db.groups.find_one({'id':value['id']})
         groups_avaliables[value['id']]=value['name']
@@ -179,23 +141,3 @@ def settings(request):
         'facebook_login': facebook_login,
         'can_disconnect': can_disconnect
         })
-
-# @login_required
-# def password(request):
-#     if request.user.has_usable_password():
-#         PasswordForm = PasswordChangeForm
-#     else:
-#         PasswordForm = AdminPasswordChangeForm
-#
-#     if request.method == 'POST':
-#         form = PasswordForm(request.user, request.POST)
-#         if form.is_valid():
-#             form.save()
-#             update_session_auth_hash(request, form.user)
-#             messages.success(request, 'Your password was successfully updated!')
-#             return redirect('password')
-#         else:
-#             messages.error(request, 'Please correct the error below.')
-#     else:
-#         form = PasswordForm(request.user)
-#     return render(request, 'core/password.html', {'form': form})
