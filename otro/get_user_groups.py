@@ -19,7 +19,7 @@ client = MongoClient('localhost', 27017)
 db = client['analistics']
 
 #Temporal tokens to use.
-access_token = 'EAACEdEose0cBAAa6s3lZA1O9WZCtXTPGxDDHDiZB5O8ktBv5PpKEfz6AmigOeccZCKBv8GxKPjdgGWvsxDxBXHlMBIZBsMLcScu5EDqi9fAgeCtZAPmjLjb4RJoObc6WFqJ0GdoLuQuwtlKZBfo2TT8xoLYffETsFCIAm1vsQ5D8Q9wdS2hI7wZAJUPh2hjA9XEZD'
+access_token = 'EAACEdEose0cBAAhyb20g9DwlagCh0srLZBbkUM8f5hfZATE2O2ZB3KttOgFuYZCn9O6coy1lZA3tGqm1rl7gnCLboPGWDTTWeArZC3cng6EOjNsglPSwJYCUGgbnc7dyLFgEpOUOO8TRZAnaS6cCHD9JQeLwKhT4dp8HaVI1enhJgoREuiQffo7SOzu2AOCm3MZD'
 #user = '1469643709723274'
 id_group = '1038566552861343'
 
@@ -91,5 +91,6 @@ for key, valu in mesage.iteritems():
 	for pal in valu:
 		if pal in diccionary:
 			sentimientos = map(operator.add, sentimientos, diccionary.get(pal))
+
 
 print(sentimientos)

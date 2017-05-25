@@ -76,27 +76,33 @@
             <div class="row">
                 {% if facebook_login %}
                   {% for key, value in groups_avaliables.items %}
-                    <div class="col-lg-3 col-md-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <div class="row">
-                                  <div class="col-xs-3">
-                                      <i class="fa fa-comments fa-5x"></i>
+
+                      <div class="col-lg-3 col-md-6">
+                          <div class="panel panel-primary">
+                              <div class="panel-heading">
+                                  <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-comments fa-5x"></i>
+                                    </div>
+                                    <div class="col-xs-9 text-right">
+                                      <div>{{ value }}</div>
+                                    </div>
                                   </div>
-                                  <div class="col-xs-9 text-right">
-                                    <div>{{ value }}</div>
+                              </div>
+                              <!-- <a href="{% url 'datag' %}" data-toggle="modal" data-target="#myModal" > -->
+                              <form action="{% url 'datag' %}" method="post">
+                              {% csrf_token %}
+                              <input  id="id_group" type="number" name="numero" value="{{ key }}" >
+                              <button style="width:100%" type="submit">
+                                  <div class="panel-footer">
+                                      <span class="pull-left">Ver Detalles</span>
+                                      <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                                      <div class="clearfix"></div>
                                   </div>
-                                </div>
-                            </div>
-                            <a href="{% url 'datag' %}" >
-                                <div class="panel-footer">
-                                    <span class="pull-left">Ver Detalles</span>
-                                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-                                    <div class="clearfix"></div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
+                              </button>
+                            </form>
+                          </div>
+                      </div>
                   {% endfor %}
                 {% endif %}
             </div>
@@ -104,7 +110,25 @@
 
         </div>
         <!-- /.container-fluid -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
 
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Modal Header</h4>
+                </div>
+                <div class="modal-body">
+                  <p>Some text in the modal.</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
     </div>
     <!-- /#page-wrapper -->
 
