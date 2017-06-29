@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 import os
 import sys
 from django.core.handlers.wsgi import WSGIHandler
-from decouple import config, Csv
+# from decouple import config, Csv
 import dj_database_url
 
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'mysite.core',
+    'chart_tools',
 ]
 
 MIDDLEWARE_CLASSES = [

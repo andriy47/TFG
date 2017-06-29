@@ -26,7 +26,7 @@
                         <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
                     </li> -->
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-envelope"></i> Grupos</a>
+                        <a href="#"><i class="fa fa-fw fa-dashboard"></i> Grupos</a>
                     </li>
                     <!-- <li>
                         <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
@@ -60,7 +60,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">
-                        <small>Elige el grupo a analizar</small>
+                        <small>Elige el grupo para analizar:</small>
                     </h1>
                     <!-- <ol class="breadcrumb">
                         <li class="active">
@@ -90,7 +90,7 @@
                                   </div>
                               </div>
                               <!-- <a href="{% url 'datag' %}" data-toggle="modal" data-target="#myModal" > -->
-                              <form action="{% url 'datag' %}" method="post">
+                              <form action="{% url 'datag' %}" method="post" style="margin:0;">
                               {% csrf_token %}
                               <input hidden id="id_group" type="number" name="numero" value="{{ key }}" >
                               <button style="width:100%" type="submit" data-toggle="modal" data-target="#myModal">

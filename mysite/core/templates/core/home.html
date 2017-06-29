@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
-
-{% block content %}
-  <h2><a href="{% url 'social:begin' 'facebook' %}">Login with Facebook</a></h2>
+{% load static %}
+  {% block content %}
+  <h2 class="login">
+    Bienvenido a AnalisticsGroup<br>
+    Analiza el estado emocional de tu grupo.<br><br>
+    <a href="{% url 'social:begin' 'facebook' %}">
+      <img border="0" alt="Facebook" src="{% static 'img/fbutton.png' %}" >
+  </a>
+</h2>
 {% endblock %}

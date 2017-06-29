@@ -1,5 +1,23 @@
 body {
    text-align: center;
-   /*background-image: url("../img/header-bg.jpg");
-   color: white;*/
+   background-image: url("../img/header-bg.jpg");
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   /*color: white;*/
+}
+
+.logout {
+  color: white;
+  font-family: 'Enriqueta', arial, serif; line-height: 1.25; font-size: 25px; font-weight: bold;
+}
+
+.login {
+  margin-top: 15%;
+  color: white;
+  font-size: 3em;
+  font-family: 'Enriqueta', arial, serif; line-height: 1.25; font-size: 40px; font-weight: bold;
+}
+
+.container-fluid { 
+  background-color: white;
 }
